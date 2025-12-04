@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.sykmm.realestate'
+    compileSdk 34
+
+    def gitCommitHash = "git rev-parse HEAD".execute().text.trim()
+    def shortCommitHash = "git rev-parse --short HEAD".execute().text.trim()
+
+
+    defaultConfig {
+        applicationId "com.sykmm.realestate"
+        minSdk 23
+        targetSdk 33
+        versionCode 1
+        versionName "chuong-" + shortCommitHash
+
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../chuong.keystore")
+            storePassword "chuong"
+            keyAlias "chuong"
+            keyPassword "chuong"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation "androidx.appcompat:appcompat:1.7.1"
+    implementation "com.google.android.material:material:1.13.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.2.1"
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //implementation 'net.java.dev.jna:jna:5.16.0' // Or a newer version if available
+	//implementation 'net.java.dev.jna:jna-platform:5.16.0' // If using jna-platform
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+    
+}
